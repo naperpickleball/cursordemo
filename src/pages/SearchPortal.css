@@ -12,9 +12,12 @@
 }
 
 .club-selector {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--club-color, #3498db);
+  color: white;
 }
 
 .club-selector select {
@@ -247,6 +250,21 @@
 
 .view-details:hover {
   text-decoration: underline;
+}
+
+.login-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.login-link:hover {
+  background-color: white;
+  color: var(--club-color, #3498db);
 }
 
 /* Club-specific themes */

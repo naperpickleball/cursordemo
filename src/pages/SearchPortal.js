@@ -255,6 +255,7 @@ const SearchPortal = () => {
             </option>
           ))}
         </select>
+        <Link to="/login" className="login-link">Login</Link>
       </div>
       
       <div className="search-container">
