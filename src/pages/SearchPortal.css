@@ -1,0 +1,313 @@
+/* src/pages/SearchPortal.css */
+:root {
+  --club-color: #3498db;
+}
+
+.search-portal {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.club-selector {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.club-selector select {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.search-container {
+  max-width: 600px;
+  width: 100%;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.portal-title {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  font-weight: normal;
+}
+
+.portal-primary {
+  color: var(--club-color);
+  font-weight: bold;
+}
+
+.portal-secondary {
+  color: #333;
+  margin-left: 5px;
+}
+
+.search-form {
+  margin-bottom: 20px;
+}
+
+.search-input-container {
+  display: flex;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+.voice-button {
+  background: none;
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.voice-button.listening {
+  animation: pulse 1.5s infinite;
+  color: red;
+}
+
+.search-button {
+  background-color: var(--club-color);
+  color: white;
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.search-button:hover {
+  background-color: rgba(var(--club-color), 0.8);
+  filter: brightness(90%);
+}
+
+.search-examples {
+  color: #666;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.results-container {
+  margin-top: 40px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--club-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+.loading-indicator p {
+  margin-top: 10px;
+  color: #666;
+}
+
+.search-result {
+  margin-top: 20px;
+  animation: fadeIn 0.5s;
+}
+
+.search-result h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.result-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-left: 4px solid var(--club-color);
+}
+
+.result-date {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.result-detail {
+  margin: 8px 0;
+  color: #555;
+}
+
+.result-teams {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.result-scores {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.score {
+  background-color: #f5f5f5;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 16px;
+}
+
+.result-outcome {
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 20px;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.result-outcome.win {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.result-outcome.loss {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.partner-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.league-name {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.ranking-info {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.rank {
+  font-weight: bold;
+  font-size: 22px;
+  color: var(--club-color);
+}
+
+.no-results {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.suggestion {
+  font-style: italic;
+  color: #666;
+  margin-top: 10px;
+}
+
+.view-details {
+  display: inline-block;
+  margin-top: 15px;
+  color: var(--club-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.view-details:hover {
+  text-decoration: underline;
+}
+
+/* Club-specific themes */
+.search-portal.naperville-picklers {
+  --club-color: #3498db;
+}
+
+.search-portal.chicago-dinks {
+  --club-color: #e74c3c;
+}
+
+.search-portal.aurora-aces {
+  --club-color: #2ecc71;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .search-container {
+    margin-top: 60px;
+  }
+  
+  .portal-title {
+    font-size: 2rem;
+  }
+  
+  .club-selector {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-bottom: 20px;
+    align-self: flex-end;
+  }
+  
+  .search-input-container {
+    flex-wrap: wrap;
+  }
+  
+  .search-input {
+    flex-basis: 100%;
+    order: 1;
+  }
+  
+  .voice-button, .search-button {
+    flex: 1;
+    order: 2;
+    padding: 10px;
+  }
+}
