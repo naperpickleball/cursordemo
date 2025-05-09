@@ -11,13 +11,19 @@
   padding: 20px;
 }
 
-.club-selector {
+.top-bar {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 2rem;
   background-color: var(--club-color, #3498db);
   color: white;
+}
+
+.club-selector {
+  display: flex;
+  align-items: center;
 }
 
 .club-selector select {

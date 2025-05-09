@@ -247,15 +247,17 @@ const SearchPortal = () => {
   
   return (
     <div className={`search-portal ${selectedClub}`}>
-      <div className="club-selector">
-        <select value={selectedClub} onChange={handleClubChange}>
-          {clubs.map(club => (
-            <option key={club.id} value={club.id}>
-              {club.name}
-            </option>
-          ))}
-        </select>
+      <div className="top-bar">
         <Link to="/login" className="login-link">Login</Link>
+        <div className="club-selector">
+          <select value={selectedClub} onChange={handleClubChange}>
+            {clubs.map(club => (
+              <option key={club.id} value={club.id}>
+                {club.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       
       <div className="search-container">
