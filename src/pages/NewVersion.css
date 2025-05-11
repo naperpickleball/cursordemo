@@ -1,0 +1,17 @@
+.new-version {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.new-version h1 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.new-version p {
+  color: #34495e;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+} 
