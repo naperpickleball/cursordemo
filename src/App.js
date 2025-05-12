@@ -10,6 +10,7 @@ import Standings from './pages/Standings';
 import ClubManagement from './pages/ClubManagement';
 import SiriIntegration from './pages/SiriIntegration';
 import SearchPortal from './pages/SearchPortal';
+import DemoPortal from './pages/DemoPortal';
 
 // Create the AuthContext directly in this file
 export const AuthContext = createContext();
@@ -95,6 +96,7 @@ function App() {
             <Route path="/" element={<SearchPortal />} />
             <Route path="/search" element={<SearchPortal />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/demo" element={<DemoPortal />} />
             
             {/* Protected routes */}
             <Route

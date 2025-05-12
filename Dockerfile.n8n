@@ -1,0 +1,15 @@
+FROM n8nio/n8n:latest
+
+# Copy custom workflows
+COPY workflows /home/node/.n8n/workflows
+
+# Set environment variables
+ENV N8N_USER_MANAGEMENT_DISABLED=false
+ENV N8N_BASIC_AUTH_ACTIVE=true
+ENV N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+ENV N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+
+# Expose N8N port
+EXPOSE 5678
+
+CMD ["n8n", "start"] 

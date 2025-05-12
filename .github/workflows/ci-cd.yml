@@ -2,9 +2,14 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, feature/azure-deployment ]
   pull_request:
     branches: [ main ]
+
+env:
+  REGISTRY: ${{ secrets.REGISTRY }}
+  IMAGE_NAME: pickleball-league
+  N8N_IMAGE_NAME: n8n-workflows
 
 jobs:
   build-and-test:
@@ -27,35 +32,67 @@ jobs:
     
     - name: Build
       run: npm run build
-    
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: build
-        path: build/
 
-  deploy:
+  build-and-push:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     
     steps:
     - uses: actions/checkout@v3
     
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
+    - name: Azure login
+      uses: azure/login@v1
       with:
-        name: build
-        path: build/
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    - name: Deploy to Azure Static Web Apps
-      uses: azure/static-web-apps-deploy@v1
+    - name: Build and push frontend container
+      uses: azure/docker-login@v1
       with:
-        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        app_location: "/"
-        api_location: ""
-        output_location: "build"
-        app_build_command: "npm run build"
-        api_build_command: ""
-        skip_app_build: true 
+        login-server: ${{ env.REGISTRY }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    - name: Build and push frontend image
+      run: |
+        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+    
+    - name: Build and push N8N image
+      run: |
+        docker build -t ${{ env.REGISTRY }}/${{ env.N8N_IMAGE_NAME }}:${{ github.sha }} -f Dockerfile.n8n .
+        docker push ${{ env.REGISTRY }}/${{ env.N8N_IMAGE_NAME }}:${{ github.sha }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/azure-deployment'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Deploy to Azure Container Apps
+      uses: azure/container-apps-deploy@v1
+      with:
+        appName: pickleball-league
+        imageToDeploy: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        containerAppName: pickleball-league
+        resourceGroup: ${{ secrets.AZURE_RESOURCE_GROUP }}
+        targetPort: 80
+        ingress: external
+        env: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    
+    - name: Deploy N8N to Azure Container Apps
+      uses: azure/container-apps-deploy@v1
+      with:
+        appName: n8n-workflows
+        imageToDeploy: ${{ env.REGISTRY }}/${{ env.N8N_IMAGE_NAME }}:${{ github.sha }}
+        containerAppName: n8n-workflows
+        resourceGroup: ${{ secrets.AZURE_RESOURCE_GROUP }}
+        targetPort: 5678
+        ingress: external
+        env: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }} 

@@ -51,6 +51,11 @@ const NavBar = () => {
             <Link to="/" className="nav-link">Search Portal</Link>
           </li>
           <li className="nav-item">
+            <Link to="/demo" className="nav-link">
+              <span className="feature-badge">Demo</span>AI Features
+            </Link>
+          </li>
+          <li className="nav-item">
             <button onClick={handleLogout} className="nav-link logout-btn">Logout</button>
           </li>
         </ul>
